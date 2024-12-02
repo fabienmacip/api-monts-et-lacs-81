@@ -1,0 +1,13 @@
+// Exemple de requête POST à /orders/guest avec ce JSON :
+
+{
+  "guest": {
+    "name": "Jean Dupont",
+    "email": "jean.dupont@example.com",
+    "phone": "0612345678"
+  },
+  "items": [
+    { "product_id": 1, "quantity": 2, "price": 10.5 },
+    { "product_id": 3, "quantity": 1, "price": 20 }
+  ]
+}

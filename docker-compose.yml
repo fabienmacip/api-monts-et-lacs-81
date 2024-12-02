@@ -1,0 +1,46 @@
+# version: "3.8"
+services:
+  apache-php:
+    image: php:8.1-apache
+    container_name: apache-php
+    ports:
+      - "8083:80" # Accès via http://localhost:8083
+    volumes:
+      - ./www:/var/www/html # Liez le dossier ./www à /var/www/html dans le conteneur
+    depends_on:
+      - db
+    networks:
+      - mynetwork
+
+  db:
+    image: mysql:8.0
+    container_name: mysql
+    ports:
+      - "3308:3308" # Accès MySQL via localhost:3308
+    environment:
+      MYSQL_ROOT_PASSWORD: root # Mot de passe root MySQL
+      MYSQL_DATABASE: mydb # Base de données par défaut
+      MYSQL_USER: user # Utilisateur MySQL
+      MYSQL_PASSWORD: password # Mot de passe utilisateur
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - mynetwork
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: phpmyadmin
+    ports:
+      - "8084:80" # Accès via http://localhost:8084
+    environment:
+      PMA_HOST: db # Correspond au nom du service MySQL
+    depends_on:
+      - db
+    networks:
+      - mynetwork
+
+volumes:
+  db_data:
+
+networks:
+  mynetwork:
