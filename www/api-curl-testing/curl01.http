@@ -1,0 +1,20 @@
+GET http://localhost:8083/users
+###
+POST http://localhost:8083/orders/guest
+content-type: application/json
+{
+  "guest": {
+    "name": "Jean Dupont",
+    "email": "jean.dupont@example.com",
+    "phone": "0612345678"
+  },
+  "items": [
+    { "product_id": 1, "quantity": 2, "price": 10.5 },
+    { "product_id": 3, "quantity": 1, "price": 20 }
+  ]
+}
+###
+#GET http://localhost:3000/auth
+#content-type: application/json
+#Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjbTBtaGE2dWgwMDAwNXJnaHlpN21wb2hkIiwiaWF0IjoxNzI1MzcwODk0LCJleHAiOjE3Mjc5NjI4OTR9.OVBu5lc_QfOvg1-oFBuQZnUX-yfdRCggC7oTmwaka3c
+###

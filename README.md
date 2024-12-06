@@ -1,3 +1,14 @@
+## Commandes courantes
+
+Démarrage classique
+docker-compose up -d
+
+Redémarrer conteneurs Docker :
+docker-compose restart
+
+Redémarrer un service spécifique :
+docker-compose up -d apache-php
+
 ## Explication des tables
 
 - **`users`** : Contient les informations des utilisateurs enregistrés, incluant leur email, mot de passe (qui devrait être haché), nom, téléphone, etc.

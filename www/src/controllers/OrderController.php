@@ -1,5 +1,5 @@
 <?php
-require '../src/config/Database.php';
+require_once '../src/config/Database.php';
 require '../src/models/OrderModel.php';
 require '../src/utils/Validator.php';
 

@@ -1,27 +1,30 @@
-# version: "3.8"
+version: "3.8"
 services:
   apache-php:
-    image: php:8.1-apache
+    image: php:8.1-apache # Utilisation de l'image PHP officielle
     container_name: apache-php
     ports:
-      - "8083:80" # Accès via http://localhost:8083
+      - "8089:80" # Accès via http://localhost:8089
     volumes:
       - ./www:/var/www/html # Liez le dossier ./www à /var/www/html dans le conteneur
     depends_on:
       - db
     networks:
       - mynetwork
+    environment:
+      - PHP_INI_SCAN_DIR=/etc/php/8.1/cli/conf.d:/etc/php/8.1/apache2/conf.d
+    command: bash -c "apt-get update && apt-get install -y libmariadb-dev && docker-php-ext-install pdo pdo_mysql && apache2-foreground"
 
   db:
     image: mysql:8.0
     container_name: mysql
     ports:
-      - "3308:3308" # Accès MySQL via localhost:3308
+      - "3308:3306" # Accès MySQL via localhost:3308
     environment:
-      MYSQL_ROOT_PASSWORD: root # Mot de passe root MySQL
-      MYSQL_DATABASE: mydb # Base de données par défaut
-      MYSQL_USER: user # Utilisateur MySQL
-      MYSQL_PASSWORD: password # Mot de passe utilisateur
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
       - db_data:/var/lib/mysql
     networks:
