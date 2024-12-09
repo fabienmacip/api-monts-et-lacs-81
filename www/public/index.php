@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 require_once '../src/config/Database.php';
 require '../src/controllers/UserController.php';
@@ -32,10 +33,11 @@ $router->addRoute('POST', 'products', [new ProductController(), 'createProduct']
 $router->addRoute('PUT', 'products/{id}', [new ProductController(), 'updateProduct']);
 $router->addRoute('DELETE', 'products/{id}', [new ProductController(), 'deleteProduct']);
 
-$router->addRoute('GET', 'cart', [new CartController(), 'getCart']);
-$router->addRoute('POST', 'cart', [new CartController(), 'addToCart']);
-$router->addRoute('DELETE', 'cart/{productId}', [new CartController(), 'removeFromCart']);
-$router->addRoute('PUT', 'cart/{productId}', [new CartController(), 'updateCart']);
+$router->addRoute('POST', 'cart/{userId}/add', [new CartController(), 'addToCart']);
+$router->addRoute('GET', 'cart/{userId}', [new CartController(), 'getCart']);
+$router->addRoute('PUT', 'cart/{userId}/update', [new CartController(), 'updateCart']);
+$router->addRoute('DELETE', 'cart/{userId}/remove/{productId}', [new CartController(), 'removeFromCart']);
+
 
 
 // Vérifier si la route existe

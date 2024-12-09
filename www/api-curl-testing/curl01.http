@@ -12,14 +12,25 @@ GET {{baseUrl}}products
 ###
 GET {{baseUrl}}cart
 ###
+POST {{baseUrl}}users
+content-type: application/json
+
+{
+    "name": "Lucien Gogol",
+    "email": "tonin@laposte.es",
+    "phone": "0612312345",
+    "password": "totototo"
+}
+
+###
 POST {{baseUrl}}orders/guest
 content-type: application/json
 
 {
   "guest": {
-    "name": "Antoines GERMINAL",
-    "email": "tonin@hotmail.es",
-    "phone": "0633991190"
+    "name": "Lucien Gogol",
+    "email": "tonin@laposte.es",
+    "phone": "0612312345"
   },
   "items": [
     { "product_id": 4, "quantity": 20, "price": 1.5 },

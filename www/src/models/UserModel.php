@@ -14,12 +14,19 @@ class UserModel {
     }
 
     public static function createUser($db, $data) {
+        $email = $data['email'];
+        $name = $data['name'];
+        $phone = $data['phone'];
+        $password = password_hash($data['password'], PASSWORD_DEFAULT);
+        
         $stmt = $db->prepare("INSERT INTO users (email, name, phone, password) VALUES (:email, :name, :phone, :password)");
-        $stmt->bindParam(':email', $data['email']);
-        $stmt->bindParam(':name', $data['name']);
-        $stmt->bindParam(':phone', $data['phone']);
-        $stmt->bindParam(':password', password_hash($data['password'], PASSWORD_DEFAULT));
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':phone', $phone);
+        $stmt->bindParam(':password', $password);
+
         $stmt->execute();
+
         return $db->lastInsertId();
     }
 

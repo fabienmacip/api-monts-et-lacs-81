@@ -32,19 +32,21 @@ require '../src/utils/Validator.php';
 class OrderController {
     public function createGuestOrder() {
         $data = json_decode(file_get_contents('php://input'), true);
-        $validation = Validator::validateGuestOrder($data);
-
-        if (!$validation['valid']) {
+    
+        if (empty($data['guest']['name']) || empty($data['guest']['email'])) {
             http_response_code(400);
-            echo json_encode(['error' => $validation['message']]);
+            echo json_encode(['error' => 'Nom et email sont requis pour une commande d\'invité.']);
             return;
         }
-
+    
+        // Assurez-vous que le panier existe (par exemple, récupérez les produits dans le panier)
         $db = Database::connect();
-        $orderId = OrderModel::createGuestOrder($db, $data['guest'], $data['items']);
-
+        $total = CartModel::calculateTotal($db, $data['guest']['cart_id']); // Calcul du total du panier
+        $orderId = OrderModel::createGuestOrder($db, $data['guest'], $data['guest']['cart_id'], $total);
+    
         echo json_encode(['success' => true, 'order_id' => $orderId]);
     }
+    
 
     /**
      * @OA\Post(

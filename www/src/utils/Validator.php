@@ -12,4 +12,18 @@ class Validator {
       }
       return ['valid' => true];
   }
+
+  public static function validateUserOrder($data) {
+    if (empty($data['items']) || !is_array($data['items'])) {
+        return ['valid' => false, 'message' => 'Les éléments de la commande sont requis.'];
+    }
+
+    foreach ($data['items'] as $item) {
+        if (empty($item['product_id']) || empty($item['quantity']) || !is_numeric($item['quantity']) || $item['quantity'] <= 0) {
+            return ['valid' => false, 'message' => 'Produit invalide ou quantité manquante.'];
+        }
+    }
+
+    return ['valid' => true, 'message' => 'Commande valide.'];
+}
 }
