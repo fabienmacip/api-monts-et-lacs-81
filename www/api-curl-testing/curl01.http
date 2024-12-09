@@ -2,18 +2,44 @@
 
 GET {{baseUrl}}users
 ###
+GET {{baseUrl}}users/1
+###
+GET {{baseUrl}}orders
+###
+GET {{baseUrl}}orders/5
+###
+GET {{baseUrl}}products
+###
+GET {{baseUrl}}cart
+###
 POST {{baseUrl}}orders/guest
 content-type: application/json
 
 {
   "guest": {
-    "name": "Jean Dupont",
-    "email": "jean.dupont@example.com",
-    "phone": "0612345678"
+    "name": "Antoines GERMINAL",
+    "email": "tonin@hotmail.es",
+    "phone": "0633991190"
   },
   "items": [
-    { "product_id": 1, "quantity": 2, "price": 10.5 },
-    { "product_id": 4, "quantity": 6, "price": 20 }
+    { "product_id": 4, "quantity": 20, "price": 1.5 },
+    { "product_id": 2, "quantity": 13, "price": 1.3 }
+  ]
+}
+###
+POST {{baseUrl}}orders/guest
+content-type: application/json
+
+{
+  "guest": {
+    "name": "Lucien Durand",
+    "email": "lulu@la.fr",
+    "phone": "0790999999"
+  },
+  "items": [
+    { "product_id": 2, "quantity": 3, "price": 15 },
+    { "product_id": 3, "quantity": 2, "price": 2.05 },
+    { "product_id": 1, "quantity": 3, "price": 12.3 }
   ]
 }
 ###
