@@ -1,10 +1,12 @@
 # Activer le moteur de réécriture
 RewriteEngine On
 
+#SetEnv APP_ENV dev  # Utiliser 'prod' en production
+
 # Rediriger toutes les requêtes vers public/index.php
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ /public/index.php?route=$1 [QSA,L]
+RewriteRule ^(.*)$ public/index.php?route=$1 [QSA,L]
 
 # Autoriser les requêtes depuis d'autres domaines (CORS)
 <IfModule mod_headers.c>

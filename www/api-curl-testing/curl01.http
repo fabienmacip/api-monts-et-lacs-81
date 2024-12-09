@@ -1,7 +1,10 @@
-GET http://localhost:8083/users
+@baseUrl = http://localhost:800/api-monts-et-lacs-81/www/
+
+GET {{baseUrl}}users
 ###
-POST http://localhost:8083/orders/guest
+POST {{baseUrl}}orders/guest
 content-type: application/json
+
 {
   "guest": {
     "name": "Jean Dupont",
@@ -10,7 +13,7 @@ content-type: application/json
   },
   "items": [
     { "product_id": 1, "quantity": 2, "price": 10.5 },
-    { "product_id": 3, "quantity": 1, "price": 20 }
+    { "product_id": 4, "quantity": 6, "price": 20 }
   ]
 }
 ###

@@ -15,6 +15,7 @@ class OrderController {
         }
 
         $db = Database::connect();
+        
         $orderId = OrderModel::createGuestOrder($db, $data['guest'], $data['items']);
 
         echo json_encode(['success' => true, 'order_id' => $orderId]);
