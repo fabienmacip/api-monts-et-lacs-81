@@ -5,10 +5,10 @@ use App\Models\OrderModel;
 use App\Models\CartModel;
 use App\Config\Database;
 use App\Utils\Validator; */
-require_once '../config/Database.php';
-require_once '../models/OrderModel.php';
-require_once '../models/CartModel.php';
-require_once '../utils/Validator.php';
+require_once __DIR__ . '/../config/Database.php';
+require_once __DIR__ . '/../models/OrderModel.php';
+require_once __DIR__ . '/../models/CartModel.php';
+require_once __DIR__ . '/../utils/Validator.php';
 
 class OrderController {
     public function createGuestOrder() {

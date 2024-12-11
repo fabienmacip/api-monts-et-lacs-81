@@ -3,7 +3,7 @@
 //namespace App\Models;
 
 //use App\Config\Database;
-require_once '../config/Database.php';
+require_once __DIR__ . '/../config/Database.php';
 class CartModel {
     public static function addToCart($db, $userId, $productId, $quantity) {
         $stmt = $db->prepare("SELECT id, stock FROM products WHERE id = ?");

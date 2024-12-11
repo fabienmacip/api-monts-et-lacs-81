@@ -2,7 +2,7 @@
 /* namespace App\Models;
 
 use App\Config\Database; */
-require_once '../config/Database.php';
+require_once __DIR__ . '/../config/Database.php';
 class OrderModel {
     public static function createGuestOrder($db, $guestData, $items) {
         $stmt = $db->prepare(

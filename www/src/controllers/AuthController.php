@@ -6,7 +6,7 @@
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;  
 //use App\Models\UserModel;
-require_once '../models/UserModel.php';
+require_once __DIR__ . '/../models/UserModel.php';
 
 class AuthController {
     public function login($request, $response) {

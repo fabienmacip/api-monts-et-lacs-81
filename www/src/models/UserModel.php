@@ -2,10 +2,8 @@
 /* namespace App\Models;
 
 use App\Config\Database; */
-require_once '../config/Database.php';
+require_once __DIR__ . '/../config/Database.php';
 
-
-require_once '../src/config/Database.php';
 class UserModel {
     public static function getAllUsers() {
         $db = Database::connect();

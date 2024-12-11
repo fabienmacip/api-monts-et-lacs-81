@@ -4,9 +4,10 @@
 
 use App\Models\UserModel;
 use App\Config\Database; */
-require_once '../config/Database.php';
-//require_once __DIR__ . '/../config/Database.php';
-require_once __DIR__ . '../models/UserModel.php';
+//require_once '../config/Database.php';
+
+require_once __DIR__ . '/../config/Database.php';
+require_once __DIR__ . '/../models/UserModel.php';
 class UserController {
     public function getUsers() {
         $users = UserModel::getAllUsers();

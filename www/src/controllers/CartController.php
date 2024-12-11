@@ -3,8 +3,8 @@
 
 use App\Models\CartModel;
 use App\Config\Database; */
-require_once '../config/Database.php';
-require_once '../models/CartModel.php';
+require_once __DIR__ . '/../config/Database.php';
+require_once __DIR__ . '/../models/CartModel.php';
 
 class CartController {
     public function addToCart($userId) {

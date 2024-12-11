@@ -10,14 +10,14 @@ use App\Controllers\CartController;
 use App\Controllers\AuthController;
 use App\Middlewares\RoleMiddleware;
 use App\Config\Database; */
-require_once '../src/config/Database.php';
-require '../src/controllers/UserController.php';
-require '../src/controllers/OrderController.php';
-require '../src/controllers/ProductController.php';
-require '../src/controllers/CartController.php';
-require '../src/controllers/AuthController.php';
-require '../src/middlewares/RoleMiddleware.php'; 
-require '../src/Router.php';
+require_once __DIR__ . '/../src/config/Database.php';
+require __DIR__ . '/../src/controllers/UserController.php';
+require __DIR__ . '/../src/controllers/OrderController.php';
+require __DIR__ . '/../src/controllers/ProductController.php';
+require __DIR__ . '/../src/controllers/CartController.php';
+require __DIR__ . '/../src/controllers/AuthController.php';
+require __DIR__ . '/../src/middlewares/RoleMiddleware.php'; 
+require __DIR__ . '/../src/Router.php';
 
 header('Content-Type: application/json');
 
