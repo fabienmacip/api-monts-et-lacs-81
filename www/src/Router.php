@@ -14,7 +14,7 @@ class Router {
     public function match($method, $route) {
         foreach ($this->routes as $routeInfo) {
             // Convertir la route en regex pour gérer les paramètres dynamiques
-            $pattern = preg_replace('/\{([a-zA-Z0-9_]+)\}/', '(?P<$1>[a-zA-Z0-9_]+)', $routeInfo['route']);
+            $pattern = preg_replace('/{([a-zA-Z0-9_]+)}/', '(?P<$1>[a-f0-9\-]{36}|[0-9]+|[a-zA-Z0-9_-]+)', $routeInfo['route']);
             
             // Comparer l'URL avec la route, en utilisant la regex
             if ($routeInfo['method'] === $method && preg_match('#^' . $pattern . '$#', $route, $matches)) {

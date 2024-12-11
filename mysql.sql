@@ -10,9 +10,14 @@ CREATE TABLE IF NOT EXISTS uuid_default (id CHAR(36) PRIMARY KEY DEFAULT (UUID()
 CREATE TABLE IF NOT EXISTS users (
     id CHAR(36) PRIMARY KEY DEFAULT (UUID()),
     email VARCHAR(255) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL, -- Utilisez un mot de passe haché (par exemple, avec bcrypt)
-    name VARCHAR(255),
+    password VARCHAR(255) NOT NULL, 
+    civility ENUM('M', 'Mme', 'Mx') DEFAULT NULL,
+    firstname VARCHAR(255),
+    lastname VARCHAR(255),
     phone VARCHAR(20),
+    role ENUM('guest', 'user', 'admin', 'superadmin') DEFAULT 'guest',
+    is_verified BOOLEAN DEFAULT FALSE,
+    last_login TIMESTAMP NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

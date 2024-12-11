@@ -2,7 +2,9 @@
 
 GET {{baseUrl}}users
 ###
-GET {{baseUrl}}users/1
+GET {{baseUrl}}users/c6026195-b7af-11ef-920b-b42e99ea22ab
+###
+DELETE {{baseUrl}}users/3523b1b3-b7a9-11ef-920b-b42e99ea22ab
 ###
 GET {{baseUrl}}orders
 ###
@@ -16,21 +18,35 @@ POST {{baseUrl}}users
 content-type: application/json
 
 {
-    "name": "Lucien Gogol",
-    "email": "tonin@laposte.es",
-    "phone": "0612312345",
+    "civility": "Mme",
+    "firstname": "Noémie",
+    "lastname": "GARRIGUES",
+    "email": "n.garrigues@laposte.fr",
+    "phone": "0612312300",
+    "password": "totototo",
+    "role": "user"
+}
+###
+POST {{baseUrl}}users
+content-type: application/json
+
+{
+    "civility": "Mx",
+    "firstname": "Dominique",
+    "lastname": "NIGHT",
+    "email": "domi@gmail.us",
+    "phone": "0612344334",
     "password": "totototo"
 }
-
 ###
 POST {{baseUrl}}orders/guest
 content-type: application/json
 
 {
   "guest": {
-    "name": "Lucien Gogol",
-    "email": "tonin@laposte.es",
-    "phone": "0612312345"
+    "name": "John DOE",
+    "email": "john@gmail.en",
+    "phone": "0612344334"
   },
   "items": [
     { "product_id": 4, "quantity": 20, "price": 1.5 },
@@ -43,9 +59,9 @@ content-type: application/json
 
 {
   "guest": {
-    "name": "Lucien Durand",
-    "email": "lulu@la.fr",
-    "phone": "0790999999"
+    "name": "Marcel POINCARRE",
+    "email": "marcel@voila.fr",
+    "phone": "0790999123"
   },
   "items": [
     { "product_id": 2, "quantity": 3, "price": 15 },

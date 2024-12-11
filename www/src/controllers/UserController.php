@@ -20,7 +20,12 @@ class UserController {
     public function getUsers() {
         $db = Database::connect();
         $users = UserModel::getAllUsers($db);
-        echo json_encode(['users' => $users]);
+        //header('Content-Type: application/json; charset=UTF-8');
+        foreach ($users as &$user) {
+            $user['firstname'] = html_entity_decode($user['firstname'], ENT_QUOTES, 'UTF-8');
+            $user['lastname'] = html_entity_decode($user['lastname'], ENT_QUOTES, 'UTF-8');
+        }
+        echo json_encode(['users' => $users], JSON_UNESCAPED_UNICODE);
     }
 
     /**
@@ -86,7 +91,9 @@ class UserController {
         $db = Database::connect();
         $user = UserModel::getUserById($db, $id);
         if ($user) {
-            echo json_encode($user);
+            $user['firstname'] = html_entity_decode($user['firstname'], ENT_QUOTES, 'UTF-8');
+            $user['lastname'] = html_entity_decode($user['lastname'], ENT_QUOTES, 'UTF-8');
+            echo json_encode($user, JSON_UNESCAPED_UNICODE);
         } else {
             http_response_code(404);
             echo json_encode(['error' => 'Utilisateur non trouvé.']);
