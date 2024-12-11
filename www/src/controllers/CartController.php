@@ -1,4 +1,10 @@
 <?php
+/* namespace App\Controllers;
+
+use App\Models\CartModel;
+use App\Config\Database; */
+require_once '../config/Database.php';
+require_once '../models/CartModel.php';
 
 class CartController {
     public function addToCart($userId) {
@@ -14,7 +20,7 @@ class CartController {
             $db = Database::connect();
             CartModel::addToCart($db, $userId, $data['product_id'], $data['quantity']);
             echo json_encode(['success' => true]);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             http_response_code(400);
             echo json_encode(['error' => $e->getMessage()]);
         }
@@ -47,7 +53,7 @@ class CartController {
             $db = Database::connect();
             CartModel::addToCart($db, $userId, $data['product_id'], $data['quantity']);
             echo json_encode(['success' => true]);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             http_response_code(400);
             echo json_encode(['error' => $e->getMessage()]);
         }

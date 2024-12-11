@@ -1,4 +1,6 @@
 <?php
+
+//namespace App\Config;
 class Database {
   public static function connect() {
       $host = 'localhost:3307';
@@ -8,8 +10,8 @@ class Database {
       $user = 'root';
       //$pass = 'password';
       $pass = '';
-      return new PDO("mysql:host=$host;dbname=$db;charset=utf8", $user, $pass, [
-          PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+      return new \PDO("mysql:host=$host;dbname=$db;charset=utf8", $user, $pass, [
+          \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION
       ]);
   }
 }

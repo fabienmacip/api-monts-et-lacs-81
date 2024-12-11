@@ -1,11 +1,22 @@
 <?php
 session_start();
 
+require_once '../../vendor/autoload.php';
+/* use App\Router;
+use App\Controllers\UserController;
+use App\Controllers\OrderController;
+use App\Controllers\ProductController;
+use App\Controllers\CartController;
+use App\Controllers\AuthController;
+use App\Middlewares\RoleMiddleware;
+use App\Config\Database; */
 require_once '../src/config/Database.php';
 require '../src/controllers/UserController.php';
 require '../src/controllers/OrderController.php';
 require '../src/controllers/ProductController.php';
 require '../src/controllers/CartController.php';
+require '../src/controllers/AuthController.php';
+require '../src/middlewares/RoleMiddleware.php'; 
 require '../src/Router.php';
 
 header('Content-Type: application/json');
@@ -14,6 +25,13 @@ header('Content-Type: application/json');
 $router = new Router();
 
 // Ajouter les routes
+
+$router->addRoute('POST', 'login', [new AuthController(), 'login']);
+
+// Routes protégées par RoleMiddleware
+//$router->addRoute('GET', 'admin/dashboard', [new AdminController(), 'dashboard'])
+  //     ->addMiddleware(new RoleMiddleware(['admin', 'superadmin']));
+
 $router->addRoute('POST', 'orders/guest', [new OrderController(), 'createGuestOrder']);
 $router->addRoute('POST', 'orders/{userId}', [new OrderController(), 'createUserOrder']);
 $router->addRoute('GET', 'orders/{orderId}', [new OrderController(), 'getOrder']);

@@ -1,15 +1,18 @@
 <?php
+/* namespace App\Models;
 
+use App\Config\Database; */
+require_once '../config/Database.php';
 class ProductModel {
     public static function getAllProducts($db) {
         $stmt = $db->query("SELECT id, name, description, price, stock FROM products");
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     public static function getProductById($db, $id) {
         $stmt = $db->prepare("SELECT id, name, description, price, stock FROM products WHERE id = ?");
         $stmt->execute([$id]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
 
     public static function createProduct($db, $data) {

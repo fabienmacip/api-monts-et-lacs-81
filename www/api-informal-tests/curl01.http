@@ -36,7 +36,8 @@ content-type: application/json
     "lastname": "NIGHT",
     "email": "domi@gmail.us",
     "phone": "0612344334",
-    "password": "totototo"
+    "password": "totototo",
+    "role": "user"
 }
 ###
 POST {{baseUrl}}orders/guest

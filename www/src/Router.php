@@ -1,5 +1,5 @@
 <?php
-
+//namespace App;
 class Router {
     private $routes = [];
 
@@ -7,8 +7,13 @@ class Router {
         $this->routes[] = [
             'method' => $method,
             'route' => $route,
-            'controllerAction' => $controllerAction
+            'controllerAction' => $controllerAction,
+            'middlewares' => []
         ];
+    }
+
+    public function addMiddleware($middleware) {
+        $this->routes[count($this->routes) - 1]['middlewares'][] = $middleware;
     }
 
     public function match($method, $route) {
@@ -18,6 +23,14 @@ class Router {
             
             // Comparer l'URL avec la route, en utilisant la regex
             if ($routeInfo['method'] === $method && preg_match('#^' . $pattern . '$#', $route, $matches)) {
+
+                // Check MiddleWares
+                foreach ($routeInfo['middlewares'] as $middleware) {
+                    if (!$middleware->handle()) {
+                        return null; // Si le middleware échoue, ne pas continuer
+                    }
+                }
+
                 // Si la route correspond, on retourne l'action du contrôleur avec les paramètres extraits
                 return [
                     'controllerAction' => $routeInfo['controllerAction'],

@@ -1,34 +1,15 @@
 <?php
-require_once '../src/config/Database.php';
-require '../src/models/OrderModel.php';
-require '../src/utils/Validator.php';
+/* namespace App\Controllers;
 
-/**
- * @OA\Post(
- *     path="/orders/guest",
- *     summary="Create a guest order",
- *     @OA\RequestBody(
- *         required=true,
- *         @OA\JsonContent(
- *             type="object",
- *             @OA\Property(property="guest", type="object"),
- *             @OA\Property(property="items", type="array", @OA\Items(type="object"))
- *         )
- *     ),
- *     @OA\Response(
- *         response=200,
- *         description="Order successfully created",
- *         @OA\JsonContent(
- *             @OA\Property(property="success", type="boolean"),
- *             @OA\Property(property="order_id", type="integer")
- *         )
- *     ),
- *     @OA\Response(
- *         response=400,
- *         description="Invalid order data"
- *     )
- * )
- */
+use App\Models\OrderModel;
+use App\Models\CartModel;
+use App\Config\Database;
+use App\Utils\Validator; */
+require_once '../config/Database.php';
+require_once '../models/OrderModel.php';
+require_once '../models/CartModel.php';
+require_once '../utils/Validator.php';
+
 class OrderController {
     public function createGuestOrder() {
         $data = json_decode(file_get_contents('php://input'), true);
@@ -48,37 +29,7 @@ class OrderController {
     }
     
 
-    /**
-     * @OA\Post(
-     *     path="/orders/user/{userId}",
-     *     summary="Create a user order",
-     *     @OA\Parameter(
-     *         name="userId",
-     *         in="path",
-     *         required=true,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(property="items", type="array", @OA\Items(type="object"))
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Order successfully created",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="success", type="boolean"),
-     *             @OA\Property(property="order_id", type="integer")
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=400,
-     *         description="Invalid order data"
-     *     )
-     * )
-     */
+ 
     public function createUserOrder($userId) {
         $data = json_decode(file_get_contents('php://input'), true);
         $validation = Validator::validateUserOrder($data);
@@ -95,27 +46,6 @@ class OrderController {
         echo json_encode(['success' => true, 'order_id' => $orderId]);
     }
 
-    /**
-     * @OA\Get(
-     *     path="/orders/{orderId}",
-     *     summary="Get an order by ID",
-     *     @OA\Parameter(
-     *         name="orderId",
-     *         in="path",
-     *         required=true,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Order found",
-     *         @OA\JsonContent(ref="#/components/schemas/Order")
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Order not found"
-     *     )
-     * )
-     */
     public function getOrder($orderId) {
         $db = Database::connect();
         $order = OrderModel::getOrderById($db, $orderId);
@@ -128,20 +58,6 @@ class OrderController {
         }
     }
 
-    /**
-     * @OA\Get(
-     *     path="/orders",
-     *     summary="Get all orders",
-     *     @OA\Response(
-     *         response=200,
-     *         description="List of orders",
-     *         @OA\JsonContent(
-     *             type="array",
-     *             @OA\Items(ref="#/components/schemas/Order")
-     *         )
-     *     )
-     * )
-     */
     public function getAllOrders() {
         $db = Database::connect();
         $orders = OrderModel::getAllOrders($db);
@@ -149,36 +65,6 @@ class OrderController {
         echo json_encode(['orders' => $orders]);
     }
 
-    /**
-     * @OA\Put(
-     *     path="/orders/{orderId}",
-     *     summary="Update an order",
-     *     @OA\Parameter(
-     *         name="orderId",
-     *         in="path",
-     *         required=true,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(property="items", type="array", @OA\Items(type="object"))
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Order successfully updated",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="success", type="boolean")
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=400,
-     *         description="Invalid order data"
-     *     )
-     * )
-     */
     public function updateOrder($orderId) {
         $data = json_decode(file_get_contents('php://input'), true);
         $db = Database::connect();
@@ -192,29 +78,6 @@ class OrderController {
         }
     }
 
-    /**
-     * @OA\Delete(
-     *     path="/orders/{orderId}",
-     *     summary="Delete an order by ID",
-     *     @OA\Parameter(
-     *         name="orderId",
-     *         in="path",
-     *         required=true,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Order successfully deleted",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="success", type="boolean")
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Order not found"
-     *     )
-     * )
-     */
     public function deleteOrder($orderId) {
         $db = Database::connect();
         $deleted = OrderModel::deleteOrder($db, $orderId);

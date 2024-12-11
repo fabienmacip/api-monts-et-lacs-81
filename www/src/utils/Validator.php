@@ -1,4 +1,5 @@
 <?php
+//namespace App\Utils;
 class Validator {
   public static function validateGuestOrder($data) {
       if (empty($data['guest']['name']) || empty($data['guest']['email'])) {

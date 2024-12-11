@@ -1,15 +1,19 @@
 
 <?php
+//namespace App\Models;
+
+//use App\Config\Database;
+require_once '../config/Database.php';
 class CartModel {
     public static function addToCart($db, $userId, $productId, $quantity) {
         $stmt = $db->prepare("SELECT id, stock FROM products WHERE id = ?");
         $stmt->execute([$productId]);
-        $product = $stmt->fetch(PDO::FETCH_ASSOC);
+        $product = $stmt->fetch(\PDO::FETCH_ASSOC);
 
         if ($product && $product['stock'] >= $quantity) {
             $stmt = $db->prepare("SELECT id, total FROM orders WHERE user_id = ? AND status = 'pending'");
             $stmt->execute([$userId]);
-            $order = $stmt->fetch(PDO::FETCH_ASSOC);
+            $order = $stmt->fetch(\PDO::FETCH_ASSOC);
 
             if (!$order) {
                 $stmt = $db->prepare("INSERT INTO orders (user_id, total, status) VALUES (?, 0, 'pending')");
@@ -21,7 +25,7 @@ class CartModel {
 
             $stmt = $db->prepare("SELECT * FROM order_items WHERE order_id = ? AND product_id = ?");
             $stmt->execute([$orderId, $productId]);
-            $existingItem = $stmt->fetch(PDO::FETCH_ASSOC);
+            $existingItem = $stmt->fetch(\PDO::FETCH_ASSOC);
 
             if ($existingItem) {
                 $stmt = $db->prepare("UPDATE order_items SET quantity = quantity + ? WHERE order_id = ? AND product_id = ?");
@@ -33,14 +37,14 @@ class CartModel {
 
             self::updateOrderTotal($db, $orderId);
         } else {
-            throw new Exception('Produit en rupture de stock ou quantité invalide.');
+            throw new \Exception('Produit en rupture de stock ou quantité invalide.');
         }
     }
 
     public static function updateOrderTotal($db, $orderId) {
         $stmt = $db->prepare("SELECT SUM(price * quantity) AS total FROM order_items WHERE order_id = ?");
         $stmt->execute([$orderId]);
-        $total = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+        $total = $stmt->fetch(\PDO::FETCH_ASSOC)['total'];
 
         $stmt = $db->prepare("UPDATE orders SET total = ? WHERE id = ?");
         $stmt->execute([$total, $orderId]);
@@ -49,7 +53,7 @@ class CartModel {
     public static function getCart($db, $userId) {
         $stmt = $db->prepare("SELECT oi.product_id, p.name, p.price, oi.quantity FROM order_items oi JOIN products p ON oi.product_id = p.id WHERE oi.order_id IN (SELECT id FROM orders WHERE user_id = ? AND status = 'pending')");
         $stmt->execute([$userId]);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     public static function removeItemFromCart($db, $userId, $productId) {
@@ -62,7 +66,7 @@ class CartModel {
     public static function calculateTotal($db, $cartId) {
         $stmt = $db->prepare("SELECT price, quantity FROM order_items WHERE cart_id = ?");
         $stmt->execute([$cartId]);
-        $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $items = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         
         $total = 0;
         foreach ($items as $item) {
@@ -84,7 +88,7 @@ class CartModel {
         ");
         $stmt->execute(['guest_id' => $sessionId]);
         
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     public static function createGuestCart($db, $sessionId, $total) {

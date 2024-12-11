@@ -1,5 +1,8 @@
 <?php
+/* namespace App\Models;
 
+use App\Config\Database; */
+require_once '../config/Database.php';
 class OrderModel {
     public static function createGuestOrder($db, $guestData, $items) {
         $stmt = $db->prepare(
@@ -38,12 +41,12 @@ class OrderModel {
     public static function getOrderById($db, $orderId) {
         $stmt = $db->prepare("SELECT * FROM orders WHERE id = ?");
         $stmt->execute([$orderId]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
 
     public static function getAllOrders($db) {
         $stmt = $db->query("SELECT * FROM orders");
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     public static function updateOrder($db, $orderId, $data) {
