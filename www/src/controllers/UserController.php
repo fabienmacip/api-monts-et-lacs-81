@@ -32,7 +32,11 @@ class UserController {
 
     public function getUser($id) {
         $db = Database::connect();
-        $user = UserModel::getUserById($db, $id);
+/*         echo "<pre>**********";
+        var_dump($id);
+        echo "</pre>***********"; */
+        $user = UserModel::getUserById($id);
+        
         if ($user) {
             $user['firstname'] = html_entity_decode($user['firstname'], ENT_QUOTES, 'UTF-8');
             $user['lastname'] = html_entity_decode($user['lastname'], ENT_QUOTES, 'UTF-8');

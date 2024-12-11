@@ -10,10 +10,12 @@ class Router {
             'controllerAction' => $controllerAction,
             'middlewares' => []
         ];
+        return $this; // Permet le chaînage
     }
 
     public function addMiddleware($middleware) {
         $this->routes[count($this->routes) - 1]['middlewares'][] = $middleware;
+        return $this; // Retourne $this pour permettre le chaînage
     }
 
     public function match($method, $route) {

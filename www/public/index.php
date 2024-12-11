@@ -40,6 +40,7 @@ $router->addRoute('PUT', 'orders/{orderId}', [new OrderController(), 'updateOrde
 $router->addRoute('DELETE', 'orders/{orderId}', [new OrderController(), 'deleteOrder']);
 
 $router->addRoute('GET', 'users', [new UserController(), 'getUsers']);
+       //->addMiddleware(new RoleMiddleware(['admin', 'superadmin']));
 $router->addRoute('POST', 'users', [new UserController(), 'createUser']);
 $router->addRoute('GET', 'users/{id}', [new UserController(), 'getUser']);
 $router->addRoute('PUT', 'users/{id}', [new UserController(), 'updateUser']);
