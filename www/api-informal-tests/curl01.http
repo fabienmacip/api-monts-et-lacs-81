@@ -14,14 +14,35 @@ GET {{baseUrl}}products
 ###
 GET {{baseUrl}}cart
 ###
+POST {{baseUrl}}auth/login
+content-type: application/json
+
+{
+    "email": "mlkj@mlkj.mlkj",
+    "password": "totototo"
+}
+###
+POST {{baseUrl}}auth/register
+content-type: application/json
+
+{
+    "civility": "M",
+    "firstname": "Julien",
+    "lastname": "LUMIN",
+    "email": "ju@laposte.fr",
+    "phone": "0612312300",
+    "password": "totototo",
+    "role": "user"
+}
+###
 POST {{baseUrl}}users
 content-type: application/json
 
 {
     "civility": "Mme",
-    "firstname": "Noémie",
+    "firstname": "Martine",
     "lastname": "GARRIGUES",
-    "email": "n.garrigues@laposte.fr",
+    "email": "n.gd@laposte.fr",
     "phone": "0612312300",
     "password": "totototo",
     "role": "user"
@@ -34,7 +55,7 @@ content-type: application/json
     "civility": "Mx",
     "firstname": "Dominique",
     "lastname": "NIGHT",
-    "email": "domi@gmail.us",
+    "email": "mlkj@mlkj.mlkj",
     "phone": "0612344334",
     "password": "totototo",
     "role": "user"

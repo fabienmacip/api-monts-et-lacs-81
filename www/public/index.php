@@ -26,12 +26,16 @@ $router = new Router();
 
 // Ajouter les routes
 
-$router->addRoute('POST', 'login', [new AuthController(), 'login']);
+$router->addRoute('POST', 'auth/login', [new AuthController(), 'login']);
+$router->addRoute('POST', 'auth/register', [new AuthController(), 'register']);
+$router->addRoute('DELETE', 'auth/delete/{id}', [new UserController(), 'deleteUser'])
+       ->addMiddleware(new RoleMiddleware(['admin', 'superadmin']));
 
-// Routes protégées par RoleMiddleware
-//$router->addRoute('GET', 'admin/dashboard', [new AdminController(), 'dashboard'])
-  //     ->addMiddleware(new RoleMiddleware(['admin', 'superadmin']));
 
+// TEST TEST TEST Routes protégées par RoleMiddleware
+/* $router->addRoute('GET', 'admin/dashboard', [new AdminController(), 'dashboard'])
+       ->addMiddleware(new RoleMiddleware(['admin', 'superadmin']));
+ */
 $router->addRoute('POST', 'orders/guest', [new OrderController(), 'createGuestOrder']);
 $router->addRoute('POST', 'orders/{userId}', [new OrderController(), 'createUserOrder']);
 $router->addRoute('GET', 'orders/{orderId}', [new OrderController(), 'getOrder']);

@@ -25,16 +25,12 @@ class UserController {
             echo json_encode(['error' => 'Email et mot de passe sont requis.']);
             return;
         }
-        $db = Database::connect();
-        $userId = UserModel::createUser($db, $data);
+        $userId = UserModel::createUser($data);
         echo json_encode(['success' => true, 'user_id' => $userId]);
     }
 
     public function getUser($id) {
         $db = Database::connect();
-/*         echo "<pre>**********";
-        var_dump($id);
-        echo "</pre>***********"; */
         $user = UserModel::getUserById($id);
         
         if ($user) {
@@ -62,8 +58,7 @@ class UserController {
     }
 
     public function deleteUser($id) {
-        $db = Database::connect();
-        $deleted = UserModel::deleteUser($db, $id);
+        $deleted = UserModel::deleteUser($id);
         if ($deleted) {
             echo json_encode(['success' => true]);
         } else {

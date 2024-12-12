@@ -27,8 +27,27 @@ class UserModel {
         return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
 
+    public static function getUserEmailOnlyByEmail($email) {
+        $db = Database::connect();
+        $stmt = $db->prepare("SELECT email FROM users WHERE email = :email");
+        $stmt->bindParam(':email', $email, \PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
+    }
 
-    public static function createUser($db, $data) {
+    public static function getUserIncludingPasswordByEmail($email) {
+        $db = Database::connect();
+        $stmt = $db->prepare("SELECT id, role, password FROM users WHERE email = :email");
+        $stmt->bindParam(':email', $email, \PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
+    }
+
+
+
+    public static function createUser($data) {
+        $db = Database::connect();
+        
         $email = $data['email'];
         $civility = $data['civility'];
         $firstname = $data['firstname'];
@@ -76,7 +95,9 @@ class UserModel {
         return $stmt->execute();
     }
 
-    public static function deleteUser($db, $id) {
+    public static function deleteUser($id) {
+        $db = Database::connect();
+
         $stmt = $db->prepare("DELETE FROM users WHERE id = :id");
         $stmt->bindParam(':id', $id, \PDO::PARAM_STR);
         return $stmt->execute();
