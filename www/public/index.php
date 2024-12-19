@@ -29,7 +29,7 @@ $router = new Router();
 $router->addRoute('POST', 'auth/login', [new AuthController(), 'login']);
 $router->addRoute('POST', 'auth/register', [new AuthController(), 'register']);
 $router->addRoute('DELETE', 'auth/delete/{id}', [new UserController(), 'deleteUser'])
-       ->addMiddleware(new RoleMiddleware(['admin', 'superadmin']));
+       ->addMiddleware(new RoleMiddleware(['user','admin', 'superadmin']));
 
 
 // TEST TEST TEST Routes protégées par RoleMiddleware
@@ -50,7 +50,8 @@ $router->addRoute('GET', 'users/{id}', [new UserController(), 'getUser']);
 $router->addRoute('PUT', 'users/{id}', [new UserController(), 'updateUser']);
 $router->addRoute('DELETE', 'users/{id}', [new UserController(), 'deleteUser']);
 
-$router->addRoute('GET', 'products', [new ProductController(), 'getProducts']);
+$router->addRoute('GET', 'products', [new ProductController(), 'getProducts'])
+       ->addMiddleware(new RoleMiddleware(['user', 'admin', 'superadmin']));
 $router->addRoute('GET', 'products/{id}', [new ProductController(), 'getProduct']);
 $router->addRoute('POST', 'products', [new ProductController(), 'createProduct']);
 $router->addRoute('PUT', 'products/{id}', [new ProductController(), 'updateProduct']);

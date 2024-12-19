@@ -25,6 +25,16 @@ class AuthController {
         
         if ($user && password_verify($data['password'], $user['password'])) {
             $jwt = $this->generateJwt($user['id'], $user['role']);
+
+            // Insérer TOKEN JWT dans la table sessions
+            $db = Database::connect();
+            $stmt = $db->prepare("INSERT INTO sessions (user_id, jwt_token, expires_at) VALUES (:user_id, :jwt_token, :expires_at)");
+            $expiresAt = date('Y-m-d H:i:s', time() + 3600);  // Expire dans 1 heure
+            $stmt->bindParam(':user_id', $user['id'], PDO::PARAM_STR);
+            $stmt->bindParam(':jwt_token', $jwt);
+            $stmt->bindParam(':expires_at', $expiresAt);
+            $stmt->execute();
+
             http_response_code(200);
             echo json_encode(['token' => $jwt]);
         } else {
@@ -32,6 +42,22 @@ class AuthController {
             echo json_encode(['error' => 'Identifiants incorrects']);
         }
     }
+
+    public function logout() {
+        $decoded = $this->verifyToken();
+        if (!$decoded) {
+            return;
+        }
+    
+        // Remove session from the database
+        $db = Database::connect();
+        $stmt = $db->prepare("DELETE FROM sessions WHERE jwt_token = :jwt");
+        $stmt->bindParam(':jwt', $_SERVER['HTTP_AUTHORIZATION']);
+        $stmt->execute();
+    
+        echo json_encode(['message' => 'Déconnexion réussie']);
+    }
+    
 
     public function register() {
         $data = json_decode(file_get_contents('php://input'), true);
@@ -68,17 +94,35 @@ class AuthController {
     public function verifyToken() {
 
         $headers = apache_request_headers();
-        if (!isset($headers['Authorization'])) {
+
+/*         echo "<pre>**************";
+        var_dump($headers);
+        echo "</pre>**************"; */
+
+        if (!isset($headers['authorization'])) {
             http_response_code(401);
             echo json_encode(["message" => "Token non fourni."]);
             return null;
         }
     
-        $token = str_replace('Bearer ', '', $headers['Authorization']);
+        $token = str_replace('Bearer ', '', $headers['authorization']);
     
         try {
             $decoded = JWT::decode($token, new Key("votre_clé_secrète", 'HS256'));
-            return $decoded;
+
+            // Validate the token against the sessions table
+            $db = Database::connect();
+            $stmt = $db->prepare("SELECT * FROM sessions WHERE jwt_token = :jwt AND expires_at > NOW()");
+            $stmt->bindParam(':jwt', $token);
+            $stmt->execute();
+            $session = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+            if ($session) {
+                return $decoded; // Token is valid and session is active
+            } else {
+                throw new Exception("Session invalide ou expirée");
+            }
+            
         } catch (Exception $e) {
             http_response_code(401);
             echo json_encode(["message" => "Token invalide : " . $e->getMessage()]);

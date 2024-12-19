@@ -6,11 +6,15 @@ GET {{baseUrl}}users/c6026195-b7af-11ef-920b-b42e99ea22ab
 ###
 DELETE {{baseUrl}}users/3523b1b3-b7a9-11ef-920b-b42e99ea22ab
 ###
+DELETE {{baseUrl}}auth/delete/3523b1b3-b7a9-11ef-920b-b42e99ea22ae
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MzQ2MDM4NTQsImV4cCI6MTczNDYwNzQ1NCwidXNlcklkIjoiNTYwMzczY2YtYjg2Zi0xMWVmLWJkMjQtYjQyZTk5ZWEyMmFiIiwicm9sZSI6ImFkbWluIn0.wAplzacbKvNGs2hjAgx69VVzIAYotMJnCuyoyHcrskE
+###
 GET {{baseUrl}}orders
 ###
 GET {{baseUrl}}orders/5
 ###
 GET {{baseUrl}}products
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MzQ2MDM4NTQsImV4cCI6MTczNDYwNzQ1NCwidXNlcklkIjoiNTYwMzczY2YtYjg2Zi0xMWVmLWJkMjQtYjQyZTk5ZWEyMmFiIiwicm9sZSI6ImFkbWluIn0.wAplzacbKvNGs2hjAgx69VVzIAYotMJnCuyoyHcrskE
 ###
 GET {{baseUrl}}cart
 ###
